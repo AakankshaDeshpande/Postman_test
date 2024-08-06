@@ -1,0 +1,637 @@
+{
+	"info": {
+		"_postman_id": "59c23b4e-3fdb-4e3f-ae98-343623581f70",
+		"name": "Team9_TechSquad_Dietician_Hackathon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33069068",
+		"_collection_link": "https://interstellar-star-412911.postman.co/workspace/Team9_TechSquad~c8dd5450-0c41-45e4-b990-1258a95038d8/collection/33069068-59c23b4e-3fdb-4e3f-ae98-343623581f70?action=share&source=collection_link&creator=33069068"
+	},
+	"item": [
+		{
+			"name": "NonAuthorization-AllModules",
+			"item": [
+				{
+					"name": "Dietician Module",
+					"item": [
+						{
+							"name": "CreateDietician_BearerToken",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(pm.response.text());\r",
+											"pm.environment.set(\"Dieticiantoken_env\",jsonData.token);\r",
+											"\r",
+											"console.log(\"Response:\", pm.response.text());///\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Log the environment variables\r",
+											"console.log(\"Password:\", pm.environment.get(\"dieticianPwd_env\"));\r",
+											"console.log(\"Email:\", pm.environment.get(\"dieticianemail_env\"));\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Admintoken_env}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"password\":\"{{dieticianPwd_env}}\",\r\n\"userLoginEmail\":\"{{dieticianemail_env}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dietician-july-api-hackathon-80f2590665cc.herokuapp.com/dietician/login",
+									"protocol": "https",
+									"host": [
+										"dietician-july-api-hackathon-80f2590665cc",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"dietician",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{Admintoken_env}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Authorization-AllModules",
+			"item": [
+				{
+					"name": "Dietician Module",
+					"item": [
+						{
+							"name": "Dietician",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"commontests.postPutHeaderTest();\r",
+											"commontests.postPutCommonTests();\r",
+											"commontests.checkstatuscode();\r",
+											"\r",
+											"if (pm.response.code === 201) { \r",
+											"pm.test(\"Check deticianid present in the response body\",() =>\r",
+											"{\r",
+											"   var jsonData = JSON.parse(pm.response.text());\r",
+											"   pm.environment.set(\"dieticianID_env\",jsonData.id);\r",
+											"  pm.environment.set(\"dieticianPwd_env\",jsonData.loginPassword);\r",
+											"   pm.environment.set(\"dieticianemail_env\",jsonData.Email);\r",
+											"   }\r",
+											"\r",
+											");\r",
+											"}\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Admintoken_env}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ContactNumber\": \"{{ContactNumber}}\",\r\n  \"DateOfBirth\": \"{{DateOfBirth}}\",\r\n  \"Education\": \"{{Education}}\",\r\n  \"Email\": \"{{Email}}\",\r\n  \"Firstname\": \"{{Firstname}}\",\r\n  \"HospitalCity\": \"{{HospitalCity}}\",\r\n  \"HospitalName\": \"{{HospitalName}}\",\r\n  \"HospitalPincode\": \"{{HospitalPincode}}\",\r\n  \"HospitalStreet\": \"{{HospitalStreet}}\",\r\n  \"Lastname\": \"{{Lastname}}\"\r\n \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/dietician",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"dietician"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dietician",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"commontests.postPutHeaderTest();\r",
+											"commontests.postPutCommonTests();\r",
+											"commontests.checkstatuscode();\r",
+											"\r",
+											"var jsonData = pm.response.json(); \r",
+											"if (pm.response.code === 200) { \r",
+											"pm.test(\"Verified fields(Lastname and Firstname) present in the response body\",() =>\r",
+											"{\r",
+											"   var jsonData = JSON.parse(pm.response.text());\r",
+											"   pm.environment.set(\"Firstname_env\",jsonData.Firstname);\r",
+											"   pm.environment.set(\"Lastname_env\",jsonData.Lastname);\r",
+											"  \r",
+											"}\r",
+											");\r",
+											"}\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Dieticiantoken_env}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ContactNumber\": \"{{updateContactNumber}}\",\r\n  \"DateOfBirth\": \"{{updateDateOfBirth}}\",\r\n  \"Education\": \"{{updateEducation}}\",\r\n  \"Email\": \"{{updateEmail}}\",\r\n  \"Firstname\": \"{{updateFirstname}}\",\r\n  \"HospitalCity\": \"{{updateHospitalCity}}\",\r\n  \"HospitalName\": \"{{updateHospitalName}}\",\r\n  \"HospitalPincode\": \"{{updateHospitalPincode}}\",\r\n  \"HospitalStreet\": \"{{updateHospitalStreet}}\",\r\n  \"Lastname\": \"{{updateLastname}}\"\r\n \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/dietician/{{DieticianId_env}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"dietician",
+										"{{DieticianId_env}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ditecian By ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"commontests.postPutHeaderTest();\r",
+											"commontests.postPutCommonTests();\r",
+											"commontests.checkstatuscode();\r",
+											"\r",
+											"if (pm.response.code === 200) { \r",
+											"pm.test(\"validating json fields\",() =>\r",
+											"{\r",
+											"   var jsonData = JSON.parse(pm.response.text());\r",
+											"   pm.expect(jsonData.Firstname).to.eql(pm.environment.get(\"Firstname_env\"));\r",
+											"   pm.expect(jsonData.Lastname).to.eql(pm.environment.get(\"Lastname_env\"));\r",
+											"}\r",
+											"\r",
+											");\r",
+											"}\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Dieticiantoken_env}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/dietician/{{DieticianId_env}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"dietician",
+										"{{DieticianId_env}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dietician",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.unset(\"dieticianID_env\");\r",
+											"pm.environment.unset(\"Firstname_env\");\r",
+											"pm.environment.unset(\"Lastname_env\");\r",
+											"\r",
+											"commontests.postPutCommonTests();\r",
+											"commontests.checkstatuscode();\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Dieticiantoken_env}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/dietician/{{DieticianId_env}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"dietician",
+										"{{DieticianId_env}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All Ditecian",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"commontests.postPutHeaderTest();\r",
+											"commontests.postPutCommonTests();\r",
+											"commontests.checkstatuscode();\r",
+											"\r",
+											"if (pm.response.code === 200) { \r",
+											"pm.test(\"validating json fields\",() =>\r",
+											"{\r",
+											"   var jsonData = JSON.parse(pm.response.text());\r",
+											"   pm.expect(jsonData.Firstname).to.eql(pm.environment.get(\"Firstname_env\"));\r",
+											"   pm.expect(jsonData.Lastname).to.eql(pm.environment.get(\"Lastname_env\"));\r",
+											"}\r",
+											");\r",
+											"}\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Dieticiantoken_env}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/dietician",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"dietician"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{Admintoken_env}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "InvalidEndPoints-AllModules",
+			"item": [
+				{
+					"name": "Dietician Module",
+					"item": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{Admintoken_env}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "EndToEndTesting-AllModules",
+			"item": [
+				{
+					"name": "Dietician Module(E2E)",
+					"item": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{Admintoken_env}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"commontests = {",
+					"postPutHeaderTest: function() { ",
+					"    //test header presence",
+					"    pm. test (\"Content-Type header is present\", () => {",
+					"    pm.response.to.have.header (\"Content-Type\");",
+					"    });",
+					"",
+					"    //test header content",
+					"    pm.test (\"Content-Type header is application/json\", () => {",
+					"    pm.expect (pm.response.headers.get ('Content-Type')) .to.include('application/json');",
+					"    });",
+					"},",
+					"",
+					"postPutCommonTests: function() {",
+					"    //test response time",
+					"        pm.test(\"Response time is less than 1000ms\", ()=> {",
+					"        pm.expect (pm.response.responseTime).to.be.below(500);",
+					"        });",
+					"    },",
+					"",
+					"",
+					"checkstatuscode: function(){",
+					" var jsonData = pm.response.json(); ",
+					"    if (pm.response.code === 200) {",
+					"    pm.test(\"Verify the expected status code is 200\", function () {",
+					"        pm.response.to.have.status(200);",
+					"    });",
+					"   ",
+					"   ",
+					"}else if (pm.response.code === 201) {",
+					"    pm.test(\"Verify the expected status code is 201\", function () {",
+					"        pm.response.to.have.status(201);",
+					"    });",
+					"       ",
+					" ",
+					"} else if (pm.response.code === 401) {",
+					"    pm.test(\"Validate status code 401\", function () {",
+					"        pm.response.to.have.status(401);",
+					"    });",
+					"    pm.test(\"message: \"+jsonData.message,()=>{",
+					"    console.log(\"Message is: \",jsonData.message);",
+					"    ",
+					"});",
+					"} else if (pm.response.code === 400) {",
+					"    pm.test(\"Validate status code 400\", function () {",
+					"        pm.response.to.have.status(400);",
+					"    });",
+					"    pm.test(\"message: \"+jsonData.message,()=>{",
+					"    console.log(\"Message is: \",jsonData.error);",
+					"   ",
+					"});",
+					"}else if (pm.response.code === 404) {",
+					"    pm.test(\"Validate Status code is 404\", function () {",
+					"        pm.response.to.have.status(404);",
+					"    });",
+					"    pm.test(\"message: \"+jsonData.message,()=>{",
+					"    console.log(\"Message is: \",jsonData.message);",
+					"   ",
+					"});",
+					"} else {",
+					"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {",
+					"        pm.expect(pm.response.code).to.be.oneOf([500,501, 503]); ",
+					"    });",
+					"    pm.test(\"error: \"+jsonData.error,()=>{",
+					"    console.log(\"Error is: \",jsonData.error);",
+					"    ",
+					"});",
+					"}",
+					"}",
+					"}",
+					""
+				]
+			}
+		}
+	]
+}
